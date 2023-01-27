@@ -1,0 +1,6 @@
+domain: danielhu.cn
+layout:
+- go.kubebuilder.io/v3
+projectName: application-operator
+repo: github.com/shengjiangfeng/application-operator
+version: "3"
