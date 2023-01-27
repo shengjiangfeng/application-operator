@@ -3,4 +3,14 @@ layout:
 - go.kubebuilder.io/v3
 projectName: application-operator
 repo: github.com/shengjiangfeng/application-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: danielhu.cn
+  group: apps
+  kind: Application
+  path: github.com/shengjiangfeng/application-operator/api/v1
+  version: v1
 version: "3"
