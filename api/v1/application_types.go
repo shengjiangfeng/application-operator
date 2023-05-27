@@ -17,6 +17,7 @@ limitations under the License.
 package v1
 
 import (
+	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -25,25 +26,37 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // ApplicationSpec defines the desired state of Application
+type DeploymentTempate struct {
+	appsv1.DeploymentSpec `json:",inline"`
+}
+type ServiceTemplate struct {
+	corev1.ServiceSpec `json:",inline"`
+}
+
 type ApplicationSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Application. Edit application_types.go to remove/update
-	Replicas int32                  `json:"replicas,omitempty"`
-	Template corev1.PodTemplateSpec `json:"template,omitempty"`
+	//// Foo is an example field of Application. Edit application_types.go to remove/update
+	//Replicas int32                  `json:"replicas,omitempty"`
+	//Template corev1.PodTemplateSpec `json:"template,omitempty"`
+	Deployment DeploymentTempate `json:"deployment,omitempty"`
+	Service    ServiceTemplate   `json:"service,omitempty"`
 }
 
 // ApplicationStatus defines the observed state of Application
 type ApplicationStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Workflow appsv1.DeploymentStatus `json:"workflow"`
+	Network  corev1.ServiceStatus    `json:"network"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
 // Application is the Schema for the applications API
+// +kubebuilder:resource:path=applications,singular=application,scope=Nammespaced,shortName=app
 type Application struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
